@@ -1,0 +1,17 @@
+-- GET /users
+curl -i http://localhost:3000/users
+
+-- GET /users/:id
+curl -i http://localhost:3000/users/1
+
+-- GET /products
+curl -i http://localhost:3000/products
+
+-- GET /products/:id
+curl -i http://localhost:3000/products/1
+
+-- GET /products
+curl -i http://localhost:3000/purchases
+
+-- GET /products/:id
+curl -i http://localhost:3000/purchases/1
