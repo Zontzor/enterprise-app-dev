@@ -9,6 +9,7 @@
   "author": "Alex",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.14.1"
+    "express": "^4.14.1",
+    "massive": "^2.6.0"
   }
 }
