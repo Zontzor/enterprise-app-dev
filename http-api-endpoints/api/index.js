@@ -2,12 +2,12 @@ var express = require('express');
 var app = express();
 var http = require('http');
 var massive = require("massive");
-var connectionString = "postgres://alex:password@localhost/pgguide";
+var connectionString = "postgres://alex:Zontz0_aws_ead@enterprise-app-dev.chtkdq9vnucp.eu-west-1.rds.amazonaws.com:5432/pgguide";
 
 // connect to Massive and get the db instance. You can safely use the
 // convenience sync method here because its on app load
 // you can also use loadSync - it's an alias
-var massiveInstance = massive.connectSync({connectionString : connectionString}) 
+var massiveInstance = massive.connectSync({connectionString : connectionString})
 
 // Set a reference to the massive instance on Express' app:
 app.set('db', massiveInstance);
