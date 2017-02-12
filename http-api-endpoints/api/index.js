@@ -1,6 +1,5 @@
 var express = require('express');
-var app = express();
-var http = require('http');
+var app = express();  
 var massive = require("massive");
 var connectionString = "postgres://alex:Zontz0_aws_ead@enterprise-app-dev.chtkdq9vnucp.eu-west-1.rds.amazonaws.com:5432/pgguide";
 
@@ -12,7 +11,6 @@ var massiveInstance = massive.connectSync({connectionString : connectionString})
 // Set a reference to the massive instance on Express' app:
 app.set('db', massiveInstance);
 app.set('view options', { pretty: true });
-http.createServer(app).listen(8080);
 
 var db = app.get('db');
 
