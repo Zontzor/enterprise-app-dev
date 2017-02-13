@@ -8,7 +8,7 @@ var connectionString = "postgres://alex:Zontz0_aws_ead@enterprise-app-dev.chtkdq
 // you can also use loadSync - it's an alias
 var massiveInstance = massive.connectSync({connectionString : connectionString})
 
-// Set a reference to the massive instance on Express' app:
+// Set a reference to the massive instance` on Express' app:
 app.set('db', massiveInstance);
 app.set('view options', { pretty: true });
 
@@ -28,8 +28,9 @@ app.get('/users/:id', function (req, res) {
 
 app.get('/products', function (req, res) {
   var name = req.query.name;
+
   console.log(name);
-  db.run("select * from products where title=$1", [name], function(err,data){
+  db.run(`select * from products where title = ${name}`, function(err,data){
     res.status(200).send(data);
   });
 })
