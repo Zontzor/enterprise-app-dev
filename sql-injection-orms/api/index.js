@@ -1,5 +1,5 @@
 var express = require('express');
-var app = express();  
+var app = express();
 var massive = require("massive");
 var connectionString = "postgres://alex:Zontz0_aws_ead@enterprise-app-dev.chtkdq9vnucp.eu-west-1.rds.amazonaws.com:5432/pgguide";
 
@@ -27,7 +27,9 @@ app.get('/users/:id', function (req, res) {
 })
 
 app.get('/products', function (req, res) {
-  db.products.find({}, function(err,data){
+  var name = req.query.name;
+  console.log(name);
+  db.run("select * from products where title=$1", [name], function(err,data){
     res.status(200).send(data);
   });
 })
