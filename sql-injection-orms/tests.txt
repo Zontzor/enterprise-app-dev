@@ -1,5 +1,8 @@
--- GET /products
+-- GET /products unsafe
 curl "http://localhost:3000/products?name=Dictionary"
 
 -- GET /products SQL Injection
-curl "http://localhost:3000/products?name='';select+*+from+users"
+curl "http://localhost:3000/products/unsecure?name='';select+*+from+users"
+
+-- GET /products safe
+curl "http://localhost:3000/products/secure/params?name=Drama"

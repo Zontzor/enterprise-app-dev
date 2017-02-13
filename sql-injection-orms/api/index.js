@@ -14,19 +14,8 @@ app.set('view options', { pretty: true });
 
 var db = app.get('db');
 
-app.get('/users', function (req, res) {
-  db.users.find({}, function(err,data){
-    res.status(200).send(data);
-  });
-})
-
-app.get('/users/:id', function (req, res) {
-  db.users.find({id : req.params.id}, function(err,data){
-    res.status(200).send(data);
-  });
-})
-
-app.get('/products', function (req, res) {
+// Uncomment to demonstrate SQL injection
+app.get('/products/unsecure', function (req, res) {
   var name = req.query.name;
 
   console.log(name);
@@ -35,22 +24,14 @@ app.get('/products', function (req, res) {
   });
 })
 
-app.get('/products/:id', function (req, res) {
-  db.products.find({id : req.params.id}, function(err,data){
+app.get('/products/secure/params', function (req, res) {
+  db.products.find({title: req.query.name}, function(err,data){
     res.status(200).send(data);
   });
 })
 
-app.get('/purchases', function (req, res) {
-  db.purchases.find({}, function(err,data){
-    res.status(200).send(data);
-  });
-})
-
-app.get('/purchases/:id', function (req, res) {
-  db.purchases.find({id : req.params.id}, function(err,data){
-    res.status(200).send(data);
-  });
+app.get('/products/secure/procedure', function (req, res) {
+  // TODO: sp logic
 })
 
 app.listen(3000, function () {
