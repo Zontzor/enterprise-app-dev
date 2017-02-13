@@ -16,22 +16,27 @@ var db = app.get('db');
 
 // Uncomment to demonstrate SQL injection
 app.get('/products/unsecure', function (req, res) {
-  var name = req.query.name;
-
-  console.log(name);
-  db.run(`select * from products where title = ${name}`, function(err,data){
+  var title = req.query.title;
+  console.log(title);
+  
+  db.run(`select * from products where title = ${title}`, function(err,data){
     res.status(200).send(data);
   });
 })
 
 app.get('/products/secure/params', function (req, res) {
-  db.products.find({title: req.query.name}, function(err,data){
+  db.products.find({title: req.query.title}, function(err,data){
     res.status(200).send(data);
   });
 })
 
 app.get('/products/secure/procedure', function (req, res) {
-  // TODO: sp logic
+  var title = req.query.title;
+  console.log(title);
+  
+  db.run(`select * from get_product('${title}')`, function(err,data){
+    res.status(200).send(data);
+  });
 })
 
 app.listen(3000, function () {
