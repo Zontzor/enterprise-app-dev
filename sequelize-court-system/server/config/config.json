@@ -1,10 +1,10 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "database_development",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "alex",
+    "password": "Zontz0_aws_ead",
+    "database": "court_system",
+    "host": "enterprise-app-dev.chtkdq9vnucp.eu-west-1.rds.amazonaws.com",
+    "dialect": "postgres"
   },
   "test": {
     "username": "root",
