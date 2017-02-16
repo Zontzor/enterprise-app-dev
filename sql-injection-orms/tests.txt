@@ -1,5 +1,5 @@
 -- GET /products unsafe
-curl "http://localhost:3000/products?title=Dictionary"
+curl "http://localhost:3000/products/unsecure?title='Dictionary'"
 
 -- GET /products SQL Injection
 curl "http://localhost:3000/products/unsecure?title='';select+*+from+users"
@@ -7,11 +7,11 @@ curl "http://localhost:3000/products/unsecure?title='';select+*+from+users"
 -- GET /products params safe
 curl "http://localhost:3000/products/secure/params?title=Drama"
 
-  -- Test unsafe
-  curl "http://localhost:3000/products/secure/params?title='';select+*+from+users"
+-- Test unsafe
+curl "http://localhost:3000/products/secure/params?title='';select+*+from+users"
 
 -- GET /products stored procedure safe
 curl "http://localhost:3000/products/secure/procedure?title=Drama"
 
-  -- Test unsafe 
-  curl "http://localhost:3000/products/secure/procedure?title='';select+*+from+users"
+-- Test unsafe 
+curl "http://localhost:3000/products/secure/procedure?title='';select+*+from+users"
