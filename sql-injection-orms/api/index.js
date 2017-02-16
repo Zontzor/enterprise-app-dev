@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var massive = require("massive");
-var connectionString = "postgres://alex:password@localhost:5432/pgguide";
+var connectionString = "postgres://ubuntu:password@ec2-34-248-62-100.eu-west-1.compute.amazonaws.com:5432/pgguide";
 
 // connect to Massive and get the db instance. You can safely use the
 // convenience sync method here because its on app load
@@ -18,7 +18,7 @@ var db = app.get('db');
 app.get('/products/unsecure', function (req, res) {
   var title = req.query.title;
   console.log(title);
-  
+
   db.run(`select * from products where title = ${title}`, function(err,data){
     res.status(200).send(data);
   });
@@ -33,7 +33,7 @@ app.get('/products/secure/params', function (req, res) {
 app.get('/products/secure/procedure', function (req, res) {
   var title = req.query.title;
   console.log(title);
-  
+
   db.run(`select * from get_product('${title}')`, function(err,data){
     res.status(200).send(data);
   });

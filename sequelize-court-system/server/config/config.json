@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "alex",
+    "username": "ubuntu",
     "password": "password",
     "database": "court_system",
-    "host": "127.0.0.1",
+    "host": "ec2-34-248-62-100.eu-west-1.compute.amazonaws.com",
     "dialect": "postgres"
   },
   "test": {
