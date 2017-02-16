@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "alex",
-    "password": "Zontz0_aws_ead",
+    "password": "password",
     "database": "court_system",
-    "host": "enterprise-app-dev.chtkdq9vnucp.eu-west-1.rds.amazonaws.com",
+    "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
