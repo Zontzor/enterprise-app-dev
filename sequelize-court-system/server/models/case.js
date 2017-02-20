@@ -7,10 +7,6 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Case.hasOne(models.Judge, {foreignKey: 'judge_id'}),
-        Case.hasOne(models.Courtroom, {foreignKey: 'courtroom_id'}),
-        Case.hasOne(models.Participant, {foreignKey: 'claimant_id'}),
-        Case.hasOne(models.Participant, {foreignKey: 'respondent_id'});
       }
     }
   });
