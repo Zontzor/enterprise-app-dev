@@ -6,7 +6,9 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
       }
-    }
+    },
+    freezeTableName: true,
+    tableName: 'court_rooms'
   });
   return CourtRoom;
 };
