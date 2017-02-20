@@ -8,7 +8,7 @@ module.exports = {
       result: false,
       createdAt : new Date(),
       updatedAt : new Date(),
-      judge_id: 3,
+      judge_id: 1,
       courtroom_id: 1,
       claimant_id: 1,
       respondent_id: 2
