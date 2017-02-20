@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('Cases', {
+    return queryInterface.createTable('cases', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -28,7 +28,7 @@ module.exports = {
       judge_id: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'Judges',
+            model: 'judges',
             key: 'id'
         },
         onUpdate: 'cascade',
@@ -37,7 +37,7 @@ module.exports = {
       courtroom_id: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'CourtRooms',
+            model: 'court_rooms',
             key: 'id'
         },
         onUpdate: 'cascade',
@@ -46,7 +46,7 @@ module.exports = {
       claimant_id: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'Participants',
+            model: 'participants',
             key: 'id'
         },
         onUpdate: 'cascade',
@@ -55,7 +55,7 @@ module.exports = {
       respondent_id: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'Participants',
+            model: 'participants',
             key: 'id'
         },
         onUpdate: 'cascade',
@@ -64,6 +64,6 @@ module.exports = {
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Cases');
+    return queryInterface.dropTable('cases');
   }
 };

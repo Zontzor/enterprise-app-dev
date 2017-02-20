@@ -2,7 +2,7 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Cases', [{
+    return queryInterface.bulkInsert('cases', [{
       start_date: new Date(),
       duration: "5 Days",
       result: false,
@@ -16,7 +16,7 @@ module.exports = {
   },
 
   down: function (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('Cases', [{
+    return queryInterface.bulkDelete('cases', [{
       judge_id: 1,
       courtroom_id: 1,
       claimant_id: 1,

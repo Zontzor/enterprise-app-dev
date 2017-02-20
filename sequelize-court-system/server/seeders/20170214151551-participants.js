@@ -2,7 +2,7 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Participants', 
+    return queryInterface.bulkInsert('participants', 
     [{
       name: 'Donald Trump',
       address: '725 5th Ave, New York',
@@ -21,7 +21,7 @@ module.exports = {
   },
 
   down: function (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('Participants', 
+    return queryInterface.bulkDelete('participants', 
     [{
       name :'Donald Trump'
     },
