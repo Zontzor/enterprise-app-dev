@@ -6,7 +6,11 @@ module.exports = function(sequelize, DataTypes) {
     result: DataTypes.BOOLEAN
   }, {
     classMethods: {
-      associate: function(models) {
+      associate: function(models) {        
+        Case.hasOne(models.Judge, {foreignKey: 'judge_id', targetKey: 'id'}),
+        Case.hasOne(models.CourtRoom, {foreignKey: 'courtroom_id', targetKey: 'id'}),
+        Case.hasOne(models.Participant, {foreignKey: 'claimant_id', targetKey: 'id'}),
+        Case.hasOne(models.Participant, {foreignKey: 'respondent_id', targetKey: 'id'});
       }
     }
   });
