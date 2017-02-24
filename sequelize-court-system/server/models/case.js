@@ -7,10 +7,10 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {        
-        Case.hasOne(models.Judge, {foreignKey: 'judge_id', targetKey: 'id'}),
-        Case.hasOne(models.CourtRoom, {foreignKey: 'courtroom_id', targetKey: 'id'}),
-        Case.hasOne(models.Participant, {foreignKey: 'claimant_id', targetKey: 'id'}),
-        Case.hasOne(models.Participant, {foreignKey: 'respondent_id', targetKey: 'id'});
+        Case.hasOne(models.Judge, {foreignKey: 'id', targetKey: 'id'}),
+        Case.hasOne(models.CourtRoom, {foreignKey: 'id', targetKey: 'id'}),
+        Case.hasOne(models.Participant, {foreignKey: 'id', targetKey: 'id'}),
+        Case.hasOne(models.Participant, {foreignKey: 'id', targetKey: 'id'});
       }
     }
   });
