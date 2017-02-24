@@ -9,7 +9,9 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
       }
-    }
+    },
+    freezeTableName: true,
+    tableName: 'participants'
   });
   return Participant;
 };
