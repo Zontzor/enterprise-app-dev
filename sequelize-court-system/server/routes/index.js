@@ -14,4 +14,7 @@ module.exports = (app) => {
   
   app.post('/api/courtrooms', CourtRoomController.create);
   app.get('/api/courtrooms', CourtRoomController.list);
+  app.get('/api/courtrooms/:id', CourtRoomController.retrieve);
+  app.put('/api/courtrooms/:id', CourtRoomController.update);
+  app.delete('/api/courtrooms/:id', CourtRoomController.destroy)
 };
