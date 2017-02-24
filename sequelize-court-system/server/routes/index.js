@@ -6,8 +6,10 @@ module.exports = (app) => {
     message: 'Welcome to the Todos API!',
   }));
 
-  app.post('/api/judges', judgesController.create);
   app.get('/api/judges', judgesController.list);
+  app.post('/api/judges', judgesController.create);
+  app.get('/api/judges/:id', judgesController.retrieve);
+  app.put('/api/judges/:id', judgesController.update);
   app.delete('/api/judges/:id', judgesController.destroy)
   
   app.post('/api/courtrooms', CourtRoomController.create);
