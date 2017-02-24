@@ -8,6 +8,7 @@ module.exports = (app) => {
 
   app.post('/api/judges', judgesController.create);
   app.get('/api/judges', judgesController.list);
+  app.delete('/api/judges/:id', judgesController.destroy)
   
   app.post('/api/courtrooms', CourtRoomController.create);
   app.get('/api/courtrooms', CourtRoomController.list);
