@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
         Case.hasOne(models.CourtRoom, {foreignKey: 'id', targetKey: 'courtroom_id'}),
         Case.hasOne(models.Participant, {foreignKey: 'id', targetKey: 'claimant_id'}),
         Case.hasOne(models.Participant, {foreignKey: 'id', targetKey: 'respondent_id'});
-      }
+      },
     },
     freezeTableName: true,
     tableName: 'cases'

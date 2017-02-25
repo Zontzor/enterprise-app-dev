@@ -9,18 +9,30 @@ module.exports = {
   },
   
   create(req, res) {
-    return Case
-      .create({
-        judge_id: req.body.judge_id,
-        courtroom_id: req.body.courtroom_id,
-        claimant_id: req.body.claimant_id,
-        respondent_id: req.body.respondent_id,
-        start_date: req.body.start_date,
-        duration: req.body.duration,
-        result: req.body.result,
-      })
-      .then(legalcase => res.status(201).send(legalcase))
-      .catch(error => res.status(400).send(error));
+    Case.count({
+      where: {courtroom_id: req.body.courtroom_id}
+    })
+    .then(function(count) {
+      console.log(count);
+      if (count === 0) {
+        return Case
+          .create({
+            judge_id: req.body.judge_id,
+            courtroom_id: req.body.courtroom_id,
+            claimant_id: req.body.claimant_id,
+            respondent_id: req.body.respondent_id,
+            start_date: req.body.start_date,
+            duration: req.body.duration,
+            result: req.body.result,
+          })
+          .then(legalcase => res.status(201).send(legalcase))
+          .catch(error => res.status(400).send(error));
+      } else {
+        return res.status(400).send({
+          message: 'Court Room Allocated',
+        });
+      }
+    })
   },
   
   retrieve(req, res) {
