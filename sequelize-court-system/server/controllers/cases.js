@@ -7,10 +7,10 @@ module.exports = {
       .then(cases => res.status(200).send(cases))
       .catch(error => res.status(400).send(error));
   },
-  
+
   create(req, res) {
     Case.count({
-      where: {courtroom_id: req.body.courtroom_id}
+      where: {courtroom_id: req.body.courtroom_id, start_date: req.body.start_date}
     })
     .then(function(count) {
       console.log(count);
@@ -34,7 +34,7 @@ module.exports = {
       }
     })
   },
-  
+
   retrieve(req, res) {
   return Case
     .findById(req.params.id)
@@ -48,7 +48,7 @@ module.exports = {
     })
     .catch(error => res.status(400).send(error));
   },
-  
+
   update(req, res) {
   return Case
     .findById(req.params.id)
@@ -69,7 +69,7 @@ module.exports = {
     })
     .catch((error) => res.status(400).send(error));
 },
-  
+
   destroy(req, res) {
     return Case
       .findById(req.params.id)
