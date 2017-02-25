@@ -7,10 +7,10 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {        
-        Case.hasOne(models.Judge, {foreignKey: 'id', targetKey: 'id'}),
-        Case.hasOne(models.CourtRoom, {foreignKey: 'id', targetKey: 'id'}),
-        Case.hasOne(models.Participant, {foreignKey: 'id', targetKey: 'id'}),
-        Case.hasOne(models.Participant, {foreignKey: 'id', targetKey: 'id'});
+        Case.hasOne(models.Judge, {foreignKey: 'id', targetKey: 'judge_id'}),
+        Case.hasOne(models.CourtRoom, {foreignKey: 'id', targetKey: 'courtroom_id'}),
+        Case.hasOne(models.Participant, {foreignKey: 'id', targetKey: 'claimant_id'}),
+        Case.hasOne(models.Participant, {foreignKey: 'id', targetKey: 'respondent_id'});
       }
     },
     freezeTableName: true,
