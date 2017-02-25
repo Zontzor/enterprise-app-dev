@@ -26,5 +26,9 @@ module.exports = (app) => {
   app.put('/api/participants/:id', ParticipantController.update);
   app.delete('/api/participants/:id', ParticipantController.destroy);
   
+  app.post('/api/cases', CaseController.create);
   app.get('/api/cases', CaseController.list);
+  app.get('/api/cases/:id', CaseController.retrieve);
+  app.put('/api/cases/:id', CaseController.update);
+  app.delete('/api/cases/:id', CaseController.destroy);
 };
