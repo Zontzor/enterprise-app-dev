@@ -11,6 +11,10 @@ module.exports = {
   create(req, res) {
     return Case
       .create({
+        judge_id: req.body.judge_id,
+        courtroom_id: req.body.courtroom_id,
+        claimant_id: req.body.claimant_id,
+        respondent_id: req.body.respondent_id,
         start_date: req.body.start_date,
         duration: req.body.duration,
         result: req.body.result,
