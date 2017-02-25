@@ -1,10 +1,11 @@
 const judgesController = require('../controllers').judges;
 const CourtRoomController = require('../controllers').courtrooms;
 const ParticipantController = require('../controllers').participants;
+const CaseController = require('../controllers').cases;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
-    message: 'Welcome to the Todos API!',
+    message: 'Welcome to the Courts API!',
   }));
 
   app.get('/api/judges', judgesController.list);
@@ -24,4 +25,6 @@ module.exports = (app) => {
   app.get('/api/participants/:id', ParticipantController.retrieve);
   app.put('/api/participants/:id', ParticipantController.update);
   app.delete('/api/participants/:id', ParticipantController.destroy);
+  
+  app.get('/api/cases', CaseController.list);
 };

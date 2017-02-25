@@ -12,7 +12,9 @@ module.exports = function(sequelize, DataTypes) {
         Case.hasOne(models.Participant, {foreignKey: 'id', targetKey: 'id'}),
         Case.hasOne(models.Participant, {foreignKey: 'id', targetKey: 'id'});
       }
-    }
+    },
+    freezeTableName: true,
+    tableName: 'cases'
   });
   return Case;
 };
