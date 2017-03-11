@@ -2,6 +2,7 @@ const judgesController = require('../controllers').judges;
 const CourtRoomController = require('../controllers').courtrooms;
 const ParticipantController = require('../controllers').participants;
 const CaseController = require('../controllers').cases;
+const UserController = require('../controllers').users;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -31,4 +32,10 @@ module.exports = (app) => {
   app.get('/api/cases/:id', CaseController.retrieve);
   app.put('/api/cases/:id', CaseController.update);
   app.delete('/api/cases/:id', CaseController.destroy);
+  
+  app.post('/api/users', UserController.create);
+  app.get('/api/users', UserController.list);
+  app.get('/api/users/:id', UserController.retrieve);
+  app.put('/api/users/:id', UserController.update);
+  app.delete('/api/users/:id', UserController.destroy);
 };
