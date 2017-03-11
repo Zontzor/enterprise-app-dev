@@ -6,10 +6,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-      },
-    },
-    freezeTableName: true,
-    tableName: 'users'
+        // associations can be defined here
+      }
+    }
   });
   return User;
 };
