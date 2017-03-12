@@ -9,12 +9,13 @@ module.exports = {
   },
   
   create(req, res) {
+    console.log("id" + req.params.username);
     return sequelize
       .query(
         "insert into users (username, hashed_password, \"createdAt\", \"updatedAt\") values (:username, crypt(:password, gen_salt('bf', 8)), :createdAt, :updatedAt)", 
         { replacements: { username: req.body.username, password: req.body.password, createdAt: new Date(), updatedAt: new Date() }, 
         type: sequelize.QueryTypes.INSERT })
-      .then(user => res.status(201).send("Success"))
+      .then(user => res.status(201).send({success: true}))
       .catch(error => res.status(400).send(error));
   },
   

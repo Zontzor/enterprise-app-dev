@@ -3,6 +3,7 @@ const CourtRoomController = require('../controllers').courtrooms;
 const ParticipantController = require('../controllers').participants;
 const CaseController = require('../controllers').cases;
 const UserController = require('../controllers').users;
+const AuthenticationController = require('../controllers').authenticate;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -38,4 +39,6 @@ module.exports = (app) => {
   app.get('/api/users/:id', UserController.retrieve);
   app.put('/api/users/:id', UserController.update);
   app.delete('/api/users/:id', UserController.destroy);
+  
+  app.post('/api/authenticate', AuthenticationController.authorize);
 };
