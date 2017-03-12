@@ -2,19 +2,19 @@ const User = require('../models').User;
 
 module.exports = {
   list(req, res) {
-    return User
-      .all()
+    return sequelize
+      .query("select * from users", { type: sequelize.QueryTypes.SELECT})
       .then(users => res.status(200).send(users))
       .catch(error => res.status(400).send(error));
   },
   
   create(req, res) {
-    return User
-      .create({
-        username: req.body.username,
-        hashed_password: req.body.password,
-      })
-      .then(user => res.status(201).send(user))
+    return sequelize
+      .query(
+        "insert into users (username, hashed_password, \"createdAt\", \"updatedAt\") values (:username, crypt(:password, gen_salt('bf', 8)), :createdAt, :updatedAt)", 
+        { replacements: { username: req.body.username, password: req.body.password, createdAt: new Date(), updatedAt: new Date() }, 
+        type: sequelize.QueryTypes.INSERT })
+      .then(user => res.status(201).send("Success"))
       .catch(error => res.status(400).send(error));
   },
   
