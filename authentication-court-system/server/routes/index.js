@@ -11,7 +11,7 @@ module.exports = (app) => {
     message: 'Welcome to the Courts API!',
   }));
   
-  app.post('/api/login', AuthenticationController.login);
+  app.get('/api/login', AuthenticationController.login);
   
   // route middleware to verify a token
   app.use((req, res, next) => {

@@ -4,9 +4,13 @@ const jwt = require('jsonwebtoken');
 module.exports = {
 
   login(req, res) {
+    var auth = req.get("authorization");
+    var credentials = new Buffer(auth.split(" ").pop(), "base64").toString("ascii").split(":");
+    console.log(credentials);
+    
     User
       .findOne({
-        where: {username: req.body.username},
+        where: {username: credentials[0]},
       })
       .then(user => {
         if (!user) {
@@ -17,7 +21,7 @@ module.exports = {
 
         sequelize
           .query("select (:hashed_password = crypt(:password, :hashed_password)) as match",
-            { replacements: { password: req.body.password, hashed_password: user.hashed_password },
+            { replacements: { password: credentials[1], hashed_password: user.hashed_password },
             type: sequelize.QueryTypes.SELECT })
           .then(row => {
             console.log(row[0].match);
