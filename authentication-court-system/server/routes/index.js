@@ -4,11 +4,43 @@ const ParticipantController = require('../controllers').participants;
 const CaseController = require('../controllers').cases;
 const UserController = require('../controllers').users;
 const AuthenticationController = require('../controllers').authenticate;
+const jwt = require('jsonwebtoken');
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
     message: 'Welcome to the Courts API!',
   }));
+  
+  app.post('/api/login', AuthenticationController.login);
+  
+  // route middleware to verify a token
+  app.use((req, res, next) => {
+
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+    if (token) {
+      console.log(token);
+      jwt.verify(token,'Monkey', function(err, decoded) {      
+        if (err) {
+          return res.status(401).send({ 
+              success: false, 
+              message: 'Failed to authenticate token.' 
+          });   
+        } else {
+          req.decoded = decoded;    
+          next();
+        }
+      });
+
+    } else {
+
+      return res.status(403).send({ 
+          success: false, 
+          message: 'No token provided.' 
+      });
+      
+    }
+  });
 
   app.get('/api/judges', judgesController.list);
   app.post('/api/judges', judgesController.create);
@@ -39,6 +71,4 @@ module.exports = (app) => {
   app.get('/api/users/:id', UserController.retrieve);
   app.put('/api/users/:id', UserController.update);
   app.delete('/api/users/:id', UserController.destroy);
-
-  app.post('/api/login', AuthenticationController.login);
 };
