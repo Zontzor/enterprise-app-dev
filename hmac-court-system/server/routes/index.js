@@ -3,16 +3,49 @@ const CourtRoomController = require('../controllers').courtrooms;
 const ParticipantController = require('../controllers').participants;
 const CaseController = require('../controllers').cases;
 const UserController = require('../controllers').users;
+const AuthenticationController = require('../controllers').authenticate;
 const CryptoJS = require('crypto-js'); 
+const jwt = require('jsonwebtoken');
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
     message: 'Welcome to the Courts API!',
   }));
   
+  app.get('/api/login', AuthenticationController.login);
+  
   // route middleware to verify a token
   app.use((req, res, next) => {
-    var hmac = req.get('authorization');
+
+    var token = req.headers['x-access-token'];
+
+    if (token) {
+      console.log(token);
+      jwt.verify(token,'Monkey', function(err, decoded) {      
+        if (err) {
+          return res.status(401).send({ 
+              success: false, 
+              message: 'Failed to authenticate token.' 
+          });   
+        } else {
+          req.decoded = decoded;    
+          next();
+        }
+      });
+
+    } else {
+
+      return res.status(403).send({ 
+          success: false, 
+          message: 'No token provided.' 
+      });
+      
+    }
+  });
+  
+  // route middleware to verify hash
+  app.use((req, res, next) => {
+    var hmac = req.get('hmac');
     
     if (hmac) {
       var secret = 'Monkey';
@@ -23,7 +56,6 @@ module.exports = (app) => {
       var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
       
       console.log("client hash: " + req.get('authorization'));
-      console.log("client body: " + req.body);  
       console.log("server hash: " + hashInBase64);
       
       if (hmac == hashInBase64) {
