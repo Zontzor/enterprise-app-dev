@@ -6,6 +6,7 @@ const UserController = require('../controllers').users;
 const AuthenticationController = require('../controllers').authenticate;
 const CryptoJS = require('crypto-js'); 
 const jwt = require('jsonwebtoken');
+const User = require('../models').User;
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
@@ -16,7 +17,6 @@ module.exports = (app) => {
   
   // route middleware to verify a token
   app.use((req, res, next) => {
-
     var token = req.headers['x-access-token'];
 
     if (token) {
@@ -55,7 +55,7 @@ module.exports = (app) => {
       var hash = CryptoJS.HmacSHA256(stuff, secret);
       var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
       
-      console.log("client hash: " + req.get('authorization'));
+      console.log("client hash: " + req.get('hmac'));
       console.log("server hash: " + hashInBase64);
       
       if (hmac == hashInBase64) {
