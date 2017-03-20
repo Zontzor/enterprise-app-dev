@@ -15,10 +15,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       secret_key: {
-        type: Sequelize.BLOB
+        type: Sequelize.STRING
       },
       access_key: {
-        type: Sequelize.BLOB
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

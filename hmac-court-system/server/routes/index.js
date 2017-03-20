@@ -4,7 +4,7 @@ const ParticipantController = require('../controllers').participants;
 const CaseController = require('../controllers').cases;
 const UserController = require('../controllers').users;
 const AuthenticationController = require('../controllers').authenticate;
-const CryptoJS = require('crypto-js'); 
+const CryptoJS = require('crypto-js');
 const jwt = require('jsonwebtoken');
 const User = require('../models').User;
 
@@ -12,65 +12,72 @@ module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
     message: 'Welcome to the Courts API!',
   }));
-  
+
   app.get('/api/login', AuthenticationController.login);
-  
+
   // route middleware to verify a token
   app.use((req, res, next) => {
     var token = req.headers['x-access-token'];
 
     if (token) {
       console.log(token);
-      jwt.verify(token,'Monkey', function(err, decoded) {      
+      jwt.verify(token,'Monkey', function(err, decoded) {
         if (err) {
-          return res.status(401).send({ 
-              success: false, 
-              message: 'Failed to authenticate token.' 
-          });   
+          return res.status(401).send({
+              success: false,
+              message: 'Failed to authenticate token.'
+          });
         } else {
-          req.decoded = decoded;    
+          req.decoded = decoded;
           next();
         }
       });
 
     } else {
 
-      return res.status(403).send({ 
-          success: false, 
-          message: 'No token provided.' 
+      return res.status(403).send({
+          success: false,
+          message: 'No token provided.'
       });
-      
     }
   });
-  
+
   // route middleware to verify hash
   app.use((req, res, next) => {
     var hmac = req.get('hmac');
-    
+
     if (hmac) {
-      var secret = 'Monkey';
-      var accesskey = 'mysupersecretkey';
-      var body = req.body;
-      var stuff = accesskey + body;
-      var hash = CryptoJS.HmacSHA256(stuff, secret);
-      var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
-      
-      console.log("client hash: " + req.get('hmac'));
-      console.log("server hash: " + hashInBase64);
-      
-      if (hmac == hashInBase64) {
-        next();
-      } else {
-        return res.status(401).send({ 
-            success: false, 
-            message: 'Failed to authenticate hmac.' 
-        });   
-      }
-      
+      var accessKey = req.get('x-access-key');
+
+      User.findOne({
+        //where: {username: 'test'}
+        where: {access_key: accessKey}
+      }).then(function(user) {
+        var base64Key = user.secret_key;
+        var parsedWordArray = CryptoJS.enc.Base64.parse(base64Key);
+        var secretKey = parsedWordArray.toString(CryptoJS.enc.Utf8);
+
+        var body = req.body;
+        var payload = accessKey + body;
+        var hash = CryptoJS.HmacSHA256(payload, secretKey);
+        var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+
+        console.log("client hash: " + req.get('hmac'));
+        console.log("server hash: " + hashInBase64);
+
+        if (hmac == hashInBase64) {
+          next();
+        } else {
+          return res.status(401).send({
+              success: false,
+              message: 'Failed to authenticate hmac'
+          });
+        }
+      })
     } else {
-      return res.status(403).send({ 
-          success: false, 
-          message: 'No hmac provided' 
+      return res.status(403).send({
+          success: false,
+          message: 'No hmac provided'
       });
     }
   });
