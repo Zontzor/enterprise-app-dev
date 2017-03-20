@@ -45,13 +45,19 @@ module.exports = (app) => {
   // route middleware to verify hash
   app.use((req, res, next) => {
     var hmac = req.get('hmac');
+    var accessKey = req.get('x-access-key');
 
     if (hmac) {
-      var accessKey = req.get('x-access-key');
+      //var accessKeyHash = CryptoJS.HmacSHA256(req.get('x-access-key'), 'Monkey');
+      console.log("Access key: " + req.get('x-access-key'));
+
+      var wordArray = CryptoJS.enc.Utf8.parse(accessKey);
+      var accessKeyHashBase64 = CryptoJS.enc.Base64.stringify(wordArray);
+      console.log("Access key base 64: " + accessKeyHashBase64);
 
       User.findOne({
         //where: {username: 'test'}
-        where: {access_key: accessKey}
+        where: {access_key: accessKeyHashBase64}
       }).then(function(user) {
         var base64Key = user.secret_key;
         var parsedWordArray = CryptoJS.enc.Base64.parse(base64Key);
