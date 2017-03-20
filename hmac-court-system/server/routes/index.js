@@ -15,63 +15,28 @@ module.exports = (app) => {
 
   app.get('/api/login', AuthenticationController.login);
 
-  // route middleware to verify a token
-  app.use((req, res, next) => {
-    var token = req.headers['x-access-token'];
-
-    if (token) {
-      console.log(token);
-      jwt.verify(token,'Monkey', function(err, decoded) {
-        if (err) {
-          return res.status(401).send({
-              success: false,
-              message: 'Failed to authenticate token.'
-          });
-        } else {
-          req.decoded = decoded;
-          next();
-        }
-      });
-
-    } else {
-
-      return res.status(403).send({
-          success: false,
-          message: 'No token provided.'
-      });
-    }
-  });
-
   // route middleware to verify hash
   app.use((req, res, next) => {
     var hmac = req.get('hmac');
     var accessKey = req.get('x-access-key');
 
     if (hmac) {
-      //var accessKeyHash = CryptoJS.HmacSHA256(req.get('x-access-key'), 'Monkey');
-      console.log("Access key: " + req.get('x-access-key'));
-
-      var wordArray = CryptoJS.enc.Utf8.parse(accessKey);
-      var accessKeyHashBase64 = CryptoJS.enc.Base64.stringify(wordArray);
-      console.log("Access key base 64: " + accessKeyHashBase64);
+      var parsedAccessKey = CryptoJS.enc.Utf8.parse(accessKey);
+      var accessKeyBase64 = CryptoJS.enc.Base64.stringify(parsedAccessKey);
 
       User.findOne({
-        //where: {username: 'test'}
-        where: {access_key: accessKeyHashBase64}
+        where: {access_key: accessKeyBase64}
       }).then(function(user) {
-        var base64Key = user.secret_key;
-        var parsedWordArray = CryptoJS.enc.Base64.parse(base64Key);
-        var secretKey = parsedWordArray.toString(CryptoJS.enc.Utf8);
+        var secretKeybase64 = user.secret_key;
+        var parsedSecretKey = CryptoJS.enc.Base64.parse(secretKeybase64);
+        var secretKey = parsedSecretKey.toString(CryptoJS.enc.Utf8);
 
         var body = req.body;
         var payload = accessKey + body;
         var hash = CryptoJS.HmacSHA256(payload, secretKey);
-        var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+        var hashBase64 = CryptoJS.enc.Base64.stringify(hash);
 
-        console.log("client hash: " + req.get('hmac'));
-        console.log("server hash: " + hashInBase64);
-
-        if (hmac == hashInBase64) {
+        if (hmac == hashBase64) {
           next();
         } else {
           return res.status(401).send({
